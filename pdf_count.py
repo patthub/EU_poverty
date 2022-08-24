@@ -1,7 +1,13 @@
 import re, PyPDF2
 
 
-def get_words_count(path):
+def get_words_count(path: str ) -> dict:
+    
+    '''
+    Function for counting number of pages and words in single PDF document. 
+    Returns results in form of dict containing PDF id (as a key) and number of pages and words (in list)
+    ex. {id123: [12, 1234]}
+    '''
     
     pdf = open(path,'rb')
     pdfReader = PyPDF2.PdfFileReader(pdf)
@@ -14,10 +20,10 @@ def get_words_count(path):
         words = re.findall(r"[^\W_]+", text, re.MULTILINE) 
         words_count += len(words)
     
-    return {path:words_count}
+    return {path:[num_pages, words_count]}
 
         
-print(get_words_count(""))
+print(get_words_count("699ecc0a-4927-47b3-a1bd-341f86fa9735.pdf"))
 
         
     
