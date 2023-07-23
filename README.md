@@ -1,0 +1,1 @@
+Link do dokumentu z planem: https://docs.google.com/document/d/1_1fnOePjoad_P2T8iWI6yR355EsjVCGNrjGVwn1Ifro/edit
