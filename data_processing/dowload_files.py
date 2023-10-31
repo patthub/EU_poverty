@@ -25,7 +25,6 @@ def get_links_to_download(links_dir: str) -> list:
 
 def download_file(file_url: str, saving_dir: str) -> None:
     max_retries = 5
-    retries = 0
     file_name_raw = file_url.split('/')[-1]
     # make hash to get file name
     file_name = str(abs(hash(file_name_raw)))
@@ -36,6 +35,7 @@ def download_file(file_url: str, saving_dir: str) -> None:
             response.raise_for_status()  # Check for HTTP errors
 
             if response.status_code == 200:
+                assert response.status_code == 200
                 # Request was successful, process the response
                 file_type =  urllib.request.urlopen(file_url).info()['content-type']
                 if file_type == 'application/pdf':
