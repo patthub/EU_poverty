@@ -92,7 +92,7 @@ def main():
     saving_dir = 'saved_files'
     links = get_links_to_download(links_dir)
     # download files in parallel
-    joblib.Parallel(n_jobs=-1, verbose=100)(joblib.delayed(download_file)(link, saving_dir) for link in links)
+    joblib.Parallel(n_jobs=1, verbose=100)(joblib.delayed(download_file)(link, saving_dir) for link in links)
 
 
 if __name__ == '__main__':
