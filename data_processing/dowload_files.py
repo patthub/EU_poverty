@@ -22,20 +22,28 @@ def download_file(file_url: str, saving_dir: str) -> None:
     # make hash to get file name
     file_name = str(abs(hash(file_name_raw)))
     logger.info(f'Downloading {file_name}')
-    r = requests.get(file_url, allow_redirects=True)
-    file_type =  urllib.request.urlopen(file_url).info()['content-type']
-    if file_type == 'application/pdf':
-        file_name += '.pdf'
-    elif file_type == 'application/msword':
-        file_name += '.doc'
-    elif file_type == 'application/zip':
-        file_name += '.zip'
-    else: 
-        with open('unknown_file_types.txt', 'a') as f:
+    try:
+        r = requests.get(file_url, allow_redirects=True)
+        file_type =  urllib.request.urlopen(file_url).info()['content-type']
+        if file_type == 'application/pdf':
+            file_name += '.pdf'
+        elif file_type == 'application/msword':
+            file_name += '.doc'
+        elif file_type == 'application/zip':
+            file_name += '.zip'
+        elif file_type == 'text/html':
+            file_name += '.html'
+        else: 
+            with open('unknown_file_types.txt', 'a') as f:
+                f.write(file_url + '\n')
+                return None
+        file_path = os.path.join(saving_dir, file_name)
+        open(file_path, 'wb').write(r.content)
+        logger.info(f'Downloaded {file_path}')
+    except Exception as e:
+        logger.error(f'Error downloading {file_url} with error {e}')
+        with open('download_errors.txt', 'a') as f:
             f.write(file_url + '\n')
-    file_path = os.path.join(saving_dir, file_name)
-    open(file_path, 'wb').write(r.content)
-    logger.info(f'Downloaded {file_path}')
 
 
 def main():
