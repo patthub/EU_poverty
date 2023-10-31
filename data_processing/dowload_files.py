@@ -41,6 +41,7 @@ def download_file(file_url: str, saving_dir: str) -> None:
         elif file_type == 'text/html':
             file_name += '.html'
         else: 
+            print(file_type)
             with open('unknown_file_types.txt', 'a') as f:
                 f.write(file_url + '\n')
                 return None
