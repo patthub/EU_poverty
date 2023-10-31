@@ -28,12 +28,14 @@ def download_file(file_url: str, saving_dir: str) -> None:
     file_name = str(abs(hash(file_name_raw)))
     logger.info(f'Downloading {file_name}')
     try:
-        r = requests.get(file_url, allow_redirects=True, proxies=proxies)
+        r = requests.get(file_url, allow_redirects=True, proxies=proxies, timeout=10)
         file_type =  urllib.request.urlopen(file_url).info()['content-type']
         if file_type == 'application/pdf':
             file_name += '.pdf'
         elif file_type == 'application/msword':
             file_name += '.doc'
+        elif file_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+            file_name += '.docx'
         elif file_type == 'application/zip':
             file_name += '.zip'
         elif file_type == 'text/html':
