@@ -64,7 +64,7 @@ def download_file(file_url: str, saving_dir: str) -> None:
                         f.write(file_url + '\n')
                         return None
                 file_path = os.path.join(saving_dir, file_name)
-                open(file_path, 'wb').write(r.content)
+                open(file_path, 'wb').write(response.content)
                 logger.info(f'Downloaded {file_path}')
                 break
 
