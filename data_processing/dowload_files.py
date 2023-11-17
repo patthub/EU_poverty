@@ -88,7 +88,7 @@ def download_file(file_url: str, saving_dir: str) -> None:
 
 
 def main():
-    links_dir = 'links'
+    links_dir = 'links_new'
     saving_dir = 'saved_files'
     links = get_links_to_download(links_dir)
     # download files in parallel
