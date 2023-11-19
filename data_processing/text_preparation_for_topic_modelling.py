@@ -23,20 +23,20 @@ from concurrent.futures import ProcessPoolExecutor
 model = lp.AutoLayoutModel('lp://EfficientDete/PubLayNet')
 
 def extract_text_from_pdf(pdf_path):
-  files_to_process_short = pdf_path
-  layout = lp.load_pdf(files_to_process_short)
-  layouts = []
-  layouts.append(layout)
-  for file, layout in zip(files_to_process_short, layouts):
-      print(file)
-      blocks = []
-      for l in layout:
-          text = ''
-          for block in l._blocks:
-              text += block.text
-              text += ' '
-          blocks.append(text)
-  return blocks
+    files_to_process_short = pdf_path
+    layout = lp.load_pdf(files_to_process_short)
+    layouts = []
+    layouts.append(layout)
+    for file, layout in zip(files_to_process_short, layouts):
+        blocks = []
+        for l in layout:
+            text = ''
+            for block in l._blocks:
+                text += block.text
+                text += ' '
+            blocks.append(text)
+    print(len(blocks))
+    return blocks
 
 def extract_tables_from_pdf(pdf_path, pages='all'):
     tables = tabula.read_pdf(pdf_path, pages=pages, multiple_tables=True)
