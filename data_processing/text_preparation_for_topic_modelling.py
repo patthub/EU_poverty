@@ -45,21 +45,24 @@ def extract_tables_from_pdf(pdf_path, pages='all'):
     return [table.to_json(orient='split') for table in tables]
 
 def process_single_pdf(pdf_path, output_folder):
-    print(f"Processing {pdf_path}")
+    try:
+        logger.info(f'Processing {pdf_path}')
 
-    text = extract_text_from_pdf(pdf_path)
-    tables = extract_tables_from_pdf(pdf_path)
+        text = extract_text_from_pdf(pdf_path)
+        tables = extract_tables_from_pdf(pdf_path)
 
-    output_data = {
-        'text': text,
-        'tables': tables
-    }
+        output_data = {
+            'text': text,
+            'tables': tables
+        }
 
-    output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path)}.json")
-    logger.info(f'Saving output to {output_json_path}')
+        output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path)}.json")
+        logger.info(f'Saving output to {output_json_path}')
 
-    with open(output_json_path, 'w') as json_file:
-        json.dump(output_data, json_file, indent=4)
+        with open(output_json_path, 'w') as json_file:
+            json.dump(output_data, json_file, indent=4)
+    except Exception as e:
+        logger.error(f'Error while processing {pdf_path}: {e}')
 
 def main(pdf_folder, output_folder):
     pdf_files = [os.path.join(pdf_folder, filename) for filename in os.listdir(pdf_folder) if filename.endswith('.pdf')]
