@@ -23,6 +23,7 @@ from loguru import logger
 import sys
 import os
 
+print(os.environ.get('JAVA_HOME'))
 # if JAVA_HOME is not set and we are in a conda environment
 if not os.environ.get('JAVA_HOME') and not os.environ.get('CONDA_DEFAULT_ENV'):
     # infer the conda environment via sys.executable path
