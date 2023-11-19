@@ -85,4 +85,4 @@ def main(pdf_folder, output_folder):
 if __name__ == '__main__':
     pdf_folder = 'saved_files/'
     output_folder = 'processed_files/'
-    main(pdf_folder, output_folder)
+    # main(pdf_folder, output_folder)
