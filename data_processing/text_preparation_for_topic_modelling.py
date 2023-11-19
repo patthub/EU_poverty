@@ -20,6 +20,14 @@ import json
 from concurrent.futures import ProcessPoolExecutor
 from loguru import logger
 
+import sys
+import os
+
+# if JAVA_HOME is not set and we are in a conda environment
+if not os.environ.get('JAVA_HOME') and not os.environ.get('CONDA_DEFAULT_ENV'):
+    # infer the conda environment via sys.executable path
+    os.environ['JAVA_HOME'] = os.sep.join(sys.executable.split(os.sep)[:-2] + ['jre'])
+
 
 model = lp.AutoLayoutModel('lp://EfficientDete/PubLayNet')
 
