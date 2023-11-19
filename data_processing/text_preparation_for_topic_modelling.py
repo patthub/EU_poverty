@@ -23,15 +23,6 @@ from loguru import logger
 import sys
 import os
 
-print(os.environ.get('JAVA_HOME'))
-# if JAVA_HOME is not set and we are in a conda environment
-if not os.environ.get('JAVA_HOME') and not os.environ.get('CONDA_DEFAULT_ENV'):
-    # infer the conda environment via sys.executable path
-    print(os.sep.join(sys.executable.split(os.sep)[:-2] + ['jre']))
-    exit(0)
-    os.environ['JAVA_HOME'] = os.sep.join(sys.executable.split(os.sep)[:-2] + ['jre'])
-
-
 model = lp.AutoLayoutModel('lp://EfficientDete/PubLayNet')
 
 def extract_text_from_pdf(pdf_path):
@@ -60,11 +51,11 @@ def process_single_pdf(pdf_path, output_folder):
         logger.info(f'Processing {pdf_path}')
 
         text = extract_text_from_pdf(pdf_path)
-        tables = extract_tables_from_pdf(pdf_path)
+        # tables = extract_tables_from_pdf(pdf_path)
 
         output_data = {
             'text': text,
-            'tables': tables
+            # 'tables': tables
         }
 
         output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path)}.json")
@@ -86,4 +77,4 @@ def main(pdf_folder, output_folder):
 if __name__ == '__main__':
     pdf_folder = 'saved_files/'
     output_folder = 'processed_files/'
-    # main(pdf_folder, output_folder)
+    main(pdf_folder, output_folder)
