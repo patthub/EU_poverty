@@ -18,6 +18,7 @@ import pdfplumber
 import tabula
 import json
 from concurrent.futures import ProcessPoolExecutor
+from loguru import logger
 
 
 model = lp.AutoLayoutModel('lp://EfficientDete/PubLayNet')
@@ -35,11 +36,12 @@ def extract_text_from_pdf(pdf_path):
                 text += block.text
                 text += ' '
             blocks.append(text)
-    print(len(blocks))
+    logger.info(f'Extracted text from {pdf_path} with {len(blocks)} blocks)')
     return blocks
 
 def extract_tables_from_pdf(pdf_path, pages='all'):
     tables = tabula.read_pdf(pdf_path, pages=pages, multiple_tables=True)
+    logger.info(f'Extracted {len(tables)} tables from {pdf_path}')
     return [table.to_json(orient='split') for table in tables]
 
 def process_single_pdf(pdf_path, output_folder):
@@ -54,6 +56,7 @@ def process_single_pdf(pdf_path, output_folder):
     }
 
     output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path)}.json")
+    logger.info(f'Saving output to {output_json_path}')
 
     with open(output_json_path, 'w') as json_file:
         json.dump(output_data, json_file, indent=4)
