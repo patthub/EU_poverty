@@ -67,6 +67,6 @@ def main(pdf_folder, output_folder):
         executor.map(process_single_pdf, pdf_files, [output_folder]*len(pdf_files))
 
 if __name__ == '__main__':
-    pdf_folder = 'pdfy/'
-    output_folder = 'outputy/'
+    pdf_folder = 'saved_files/'
+    output_folder = 'processed_files/'
     main(pdf_folder, output_folder)
