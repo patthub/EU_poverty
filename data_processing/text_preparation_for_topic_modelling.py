@@ -58,7 +58,7 @@ def process_single_pdf(pdf_path, output_folder):
             # 'tables': tables
         }
 
-        output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path)}.json")
+        output_json_path = os.path.join(output_folder, f"{os.path.basename(pdf_path).strip('.pdf')}.json")
         logger.info(f'Saving output to {output_json_path}')
 
         with open(output_json_path, 'w') as json_file:
