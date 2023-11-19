@@ -26,6 +26,8 @@ import os
 # if JAVA_HOME is not set and we are in a conda environment
 if not os.environ.get('JAVA_HOME') and not os.environ.get('CONDA_DEFAULT_ENV'):
     # infer the conda environment via sys.executable path
+    print(os.sep.join(sys.executable.split(os.sep)[:-2] + ['jre']))
+    exit(0)
     os.environ['JAVA_HOME'] = os.sep.join(sys.executable.split(os.sep)[:-2] + ['jre'])
 
 
