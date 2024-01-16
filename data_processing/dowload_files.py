@@ -4,12 +4,14 @@ from loguru import logger
 import joblib
 import urllib
 from time import sleep
+import json
 
 proxies = {
   "http": "",
   "https": "",
 }
 
+file_names = {}
 
 def get_links_to_download(links_dir: str) -> list:
     links = []
@@ -28,10 +30,11 @@ def download_file(file_url: str, saving_dir: str) -> None:
     file_name_raw = file_url.split('/')[-1]
     # make hash to get file name
     file_name = str(abs(hash(file_name_raw)))
+    file_names[file_name] = file_url
     logger.info(f'Downloading {file_name}')
     for attempt in range(max_retries):
         try:
-            response = requests.get(file_url, proxies=proxies, timeout=None)
+            response = requests.get(file_url, proxies=proxies, timeout=30)
             response.raise_for_status()  # Check for HTTP errors
 
             if response.status_code == 200:
@@ -93,7 +96,9 @@ def main():
     links = get_links_to_download(links_dir)
     # download files in parallel
     joblib.Parallel(n_jobs=10, verbose=100)(joblib.delayed(download_file)(link, saving_dir) for link in links)
-
+    # save dict to json
+    with open('file_names.json', 'w') as f:
+        json.dump(file_names, f)
 
 if __name__ == '__main__':
     main()
