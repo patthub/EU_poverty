@@ -92,7 +92,7 @@ def download_file(file_url: str, saving_dir: str) -> None:
 
 def main():
     links_dir = 'links_new'
-    saving_dir = 'saved_files'
+    saving_dir = 'saved_files_16_01'
     links = get_links_to_download(links_dir)
     # download files in parallel
     joblib.Parallel(n_jobs=10, verbose=100)(joblib.delayed(download_file)(link, saving_dir) for link in links)
