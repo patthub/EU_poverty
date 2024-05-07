@@ -94,7 +94,6 @@ def main(pdf_folder, output_folder):
     with ThreadPoolExecutor() as executor:
         executor.map(process_single_pdf, pdf_files, [output_folder]*len(pdf_files))
 
-# Tests could be written here to validate the functionality of each function.
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process PDF files.')
